@@ -24,7 +24,7 @@ public class FreezePea extends Pea {
             Zombie z = gp.getLaneZombies().get(getMyLane()).get(i);
             Rectangle zRect = new Rectangle(z.getPosX(), 109 + getMyLane() * 120, 80, 120);
             if (pRect.intersects(zRect)) {
-                z.setHealth(z.getHealth() - 300);
+                z.setHealth(z.getHealth() - 20);
                 z.slow();
                 if (z.getHealth() < 0) {
                     System.out.println("ZOMBIE DIED BY FREEZE");

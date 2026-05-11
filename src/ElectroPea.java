@@ -37,7 +37,7 @@ public class ElectroPea extends Pea {
 
             if (pRect.intersects(zRect)) {
                 // Gây sát thương
-                z.setHealth(z.getHealth() - 300);
+                z.setHealth(z.getHealth() - 40);
                 
                 if (z.getHealth() < 0) {
                     System.out.println("ZOMBIE DIED BY ELECTRICITY");

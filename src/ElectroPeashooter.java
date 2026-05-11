@@ -7,7 +7,7 @@ public class ElectroPeashooter extends Plant {
 
     public ElectroPeashooter(GamePanel parent, int x, int y) {
     super(parent, x, y);
-    
+    setHealth(300);
     // LỆNH QUAN TRỌNG: Load ảnh GIF cho cây
     java.net.URL imgUrl = this.getClass().getResource("images/plants/electropeashooter.gif");
     System.out.println("Kết quả nạp ảnh cây: " + imgUrl);

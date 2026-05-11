@@ -33,9 +33,9 @@ public class Pea {
             Zombie z = gp.getLaneZombies().get(myLane).get(i);
             Rectangle zRect = new Rectangle(z.getPosX(), 109 + myLane * 120, 80, 120);
             if (pRect.intersects(zRect)) {
-                z.setHealth(z.getHealth() - 300);
-                if (z.getHealth() < 0) {
-                    System.out.println("ZOMBIE DIED");
+                z.setHealth(z.getHealth() - 20);
+                if (z.getHealth() <= 0) {
+                    System.out.println("ZOMBIE DIED" + z.getHealth());
                     gp.getLaneZombies().get(myLane).remove(i);
                     GamePanel.setProgress(10);
                 }
@@ -45,11 +45,6 @@ public class Pea {
         }
         
         posX += 15;
-        
-        // Remove pea if it goes off-screen
-        if (posX > 1000) {
-            gp.getLanePeas().get(myLane).remove(this);
-        }
         
         // Remove pea if it goes off-screen
         if (posX > 1000) {

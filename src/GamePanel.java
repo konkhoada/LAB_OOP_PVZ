@@ -10,8 +10,8 @@ import javax.swing.*;
 public class GamePanel extends JLayeredPane implements MouseMotionListener {
 
     private Image bgImage;
-    private Image normalZombieImage;
-    private Image coneHeadZombieImage;
+    private Image zom1_walk, zom2_walk;
+    private Image zom1_eat, zom2_eat;
     private Collider[] colliders;
 
     private ArrayList<ArrayList<Zombie>> laneZombies;
@@ -48,8 +48,10 @@ public class GamePanel extends JLayeredPane implements MouseMotionListener {
 
         bgImage = new ImageIcon(this.getClass().getResource("images/mainBG.png")).getImage();
 
-        normalZombieImage = new ImageIcon(this.getClass().getResource("images/zombies/zombie1.png")).getImage();
-        coneHeadZombieImage = new ImageIcon(this.getClass().getResource("images/zombies/zombie2.png")).getImage();
+        zom1_walk = new ImageIcon(this.getClass().getResource("images/zombies/walking_zom1.gif")).getImage();
+        zom2_walk = new ImageIcon(this.getClass().getResource("images/zombies/walking_zom2.gif")).getImage();
+        zom1_eat = new ImageIcon(this.getClass().getResource("images/zombies/eating_zom1.gif")).getImage();
+        zom2_eat = new ImageIcon(this.getClass().getResource("images/zombies/eating_zom1.gif")).getImage();
 
         laneZombies = new ArrayList<>();
         laneZombies.add(new ArrayList<>()); //line 1
@@ -157,10 +159,19 @@ public class GamePanel extends JLayeredPane implements MouseMotionListener {
 
         for (int i = 0; i < 5; i++) {
             for (Zombie z : laneZombies.get(i)) {
-                if (z instanceof NormalZombie) {
-                    g.drawImage(normalZombieImage, z.getPosX(), 109 + (i * 120), null);
-                } else if (z instanceof ConeHeadZombie) {
-                    g.drawImage(coneHeadZombieImage, z.getPosX(), 109 + (i * 120), null);
+                if(z.isEating()){
+                    if (z instanceof NormalZombie) {
+                        g.drawImage(zom1_eat, z.getPosX(), 90 + (i * 120), null);
+                    } else if (z instanceof ConeHeadZombie) {
+                        g.drawImage(zom2_eat, z.getPosX(), 100 + (i * 120), null);
+                    }
+                }
+                else {
+                    if (z instanceof NormalZombie) {
+                        g.drawImage(zom1_walk, z.getPosX(), 90 + (i * 120), null);
+                    } else if (z instanceof ConeHeadZombie) {
+                        g.drawImage(zom2_walk, z.getPosX(), 70 + (i * 120), null);
+                    }
                 }
             }
 

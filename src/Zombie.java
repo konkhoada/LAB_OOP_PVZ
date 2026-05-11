@@ -1,8 +1,12 @@
 import javax.swing.*;
 
 public class Zombie {
+    public static final long ATTACK_INTERVAL_MS = 1000; // Adjust this value to set the attack interval in milliseconds
+    public long lastAttackTime = 0; 
 
-    private int health = 1000;
+    public boolean isEating = false;
+
+    private int health;
     private int speed = 1;
 
     private GamePanel gp;
@@ -27,6 +31,7 @@ public class Zombie {
                 }
             }
             if (!isCollides) {
+                isEating = false;
                 if (slowInt > 0) {
                     if (slowInt % 2 == 0) {
                         posX--;
@@ -35,8 +40,14 @@ public class Zombie {
                 } else {
                     posX -= 1;
                 }
-            } else {
-                collided.assignedPlant.setHealth(collided.assignedPlant.getHealth() - 10);
+            } 
+            else {
+                isEating = true;
+                long now = System.currentTimeMillis();
+                if (now - lastAttackTime >= ATTACK_INTERVAL_MS) {
+                    collided.assignedPlant.setHealth(collided.assignedPlant.getHealth() - 50);
+                    lastAttackTime = now;
+                }
                 if (collided.assignedPlant.getHealth() < 0) {
                     collided.removePlant();
                 }
@@ -67,6 +78,10 @@ public class Zombie {
                 break;
         }
         return z;
+    }
+
+    public boolean isEating() {
+        return isEating;
     }
 
     public int getHealth() {

@@ -1,4 +1,4 @@
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class GameWindow extends JFrame {
@@ -14,6 +14,7 @@ public class GameWindow extends JFrame {
     //PlantType activePlantingBrush = PlantType.None;
 
     public GameWindow() {
+        System.out.println("=== GameWindow() constructor started ===");
         setSize(1012, 785);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(null);
@@ -22,9 +23,11 @@ public class GameWindow extends JFrame {
         sun.setLocation(37, 80);
         sun.setSize(60, 20);
 
+        System.out.println("Creating GamePanel...");
         GamePanel gp = new GamePanel(sun);
         gp.setLocation(0, 0);
         getLayeredPane().add(gp, Integer.valueOf(0));
+        System.out.println("GamePanel added successfully");
 
         PlantCard sunflower = new PlantCard(ResourceLoader.loadImage("/images/cards/card_sunflower.png"));
         sunflower.setLocation(110, 8);
@@ -52,10 +55,26 @@ public class GameWindow extends JFrame {
         electroCard.setAction((ActionEvent e) -> {
             gp.setActivePlantingBrush(PlantType.ElectroPeashooter);
         });
-        getLayeredPane().add(electroCard, Integer.valueOf(3));  
+        getLayeredPane().add(electroCard, Integer.valueOf(3));
+        
+        // Add Shovel card at top-right corner minus 150 pixels
+        ShovelCard shovelCard = new ShovelCard(
+            ResourceLoader.loadImage("/images/GameTool/Shovel/Shovelpot.png"),
+            ResourceLoader.loadImage("/images/GameTool/Shovel/Pot.png"),
+            ResourceLoader.loadImage("/images/GameTool/Shovel/Shovel.png"),
+            this,
+            getLayeredPane(),
+            gp
+        );
+        shovelCard.setLocation(500, -100);
+        getLayeredPane().add(shovelCard, Integer.valueOf(3));
+        
         getLayeredPane().add(sun, Integer.valueOf(2));
+        System.out.println("Setting window properties...");
         setResizable(false);
+        System.out.println("Setting visible...");
         setVisible(true);
+        System.out.println("=== GameWindow() constructor completed successfully ===");
     }
 
     public GameWindow(boolean b) {
@@ -72,8 +91,17 @@ public class GameWindow extends JFrame {
     static GameWindow gw;
 
     public static void begin() {
-        gw.dispose();
-        gw = new GameWindow();
+        try {
+            System.out.println("=== GameWindow.begin() called ===");
+            System.out.println("Disposing old GameWindow...");
+            gw.dispose();
+            System.out.println("Old window disposed, creating new GameWindow...");
+            gw = new GameWindow();
+            System.out.println("New GameWindow created successfully");
+        } catch (Exception e) {
+            System.err.println("Error starting game:");
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

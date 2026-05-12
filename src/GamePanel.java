@@ -40,81 +40,92 @@ public class GamePanel extends JLayeredPane implements MouseMotionListener {
     }
 
     public GamePanel(JLabel sunScoreboard) {
-        setSize(1000, 752);
-        setLayout(null);
-        addMouseMotionListener(this);
-        this.sunScoreboard = sunScoreboard;
-        setSunScore(150);  //pool avalie
+        try {
+            setSize(1000, 752);
+            setLayout(null);
+            addMouseMotionListener(this);
+            this.sunScoreboard = sunScoreboard;
+            setSunScore(150);  //pool avalie
 
-        bgImage = ResourceLoader.loadImage("/images/mainBG.png");
-
-        zom1_walk = ResourceLoader.loadImage("/images/zombies/walking_zom1.gif");
-        zom2_walk = ResourceLoader.loadImage("/images/zombies/walking_zom2.gif");
-        zom1_eat = ResourceLoader.loadImage("/images/zombies/eating_zom1.gif");
-        zom2_eat = ResourceLoader.loadImage("/images/zombies/eating_zom2.gif");
-
-        laneZombies = new ArrayList<>();
-        laneZombies.add(new ArrayList<>()); //line 1
-        laneZombies.add(new ArrayList<>()); //line 2
-        laneZombies.add(new ArrayList<>()); //line 3
-        laneZombies.add(new ArrayList<>()); //line 4
-        laneZombies.add(new ArrayList<>()); //line 5
-
-        lanePeas = new ArrayList<>();
-        lanePeas.add(new ArrayList<>()); //line 1
-        lanePeas.add(new ArrayList<>()); //line 2
-        lanePeas.add(new ArrayList<>()); //line 3
-        lanePeas.add(new ArrayList<>()); //line 4
-        lanePeas.add(new ArrayList<>()); //line 5
-
-        colliders = new Collider[45];
-        for (int i = 0; i < 45; i++) {
-            Collider a = new Collider();
-            a.setLocation(44 + (i % 9) * 100, 109 + (i / 9) * 120);
-            a.setAction(new PlantActionListener((i % 9), (i / 9)));
-            colliders[i] = a;
-            add(a, Integer.valueOf(0));
-        }
-
-        //colliders[0].setPlant(new FreezePeashooter(this,0,0));
-/*
-        colliders[9].setPlant(new Peashooter(this,0,1));
-        laneZombies.get(1).add(new NormalZombie(this,1));*/
-
-        activeSuns = new ArrayList<>();
-
-        redrawTimer = new Timer(25, (ActionEvent e) -> {
-            repaint();
-        });
-        redrawTimer.start();
-
-        advancerTimer = new Timer(60, (ActionEvent e) -> advance());
-        advancerTimer.start();
-
-        sunProducer = new Timer(5000, (ActionEvent e) -> {
-            Random rnd = new Random();
-            Sun sta = new Sun(this, rnd.nextInt(800) + 100, 0, rnd.nextInt(300) + 200);
-            activeSuns.add(sta);
-            add(sta, Integer.valueOf(1));
-        });
-        sunProducer.start();
-
-        zombieProducer = new Timer(7000, (ActionEvent e) -> {
-            Random rnd = new Random();
-            String[] Level = LevelData.LEVEL_CONTENT[Integer.parseInt(LevelData.LEVEL_NUMBER) - 1];
-            int[][] LevelValue = LevelData.LEVEL_VALUE[Integer.parseInt(LevelData.LEVEL_NUMBER) - 1];
-            int l = rnd.nextInt(5);
-            int t = rnd.nextInt(100);
-            Zombie z = null;
-            for (int i = 0; i < LevelValue.length; i++) {
-                if (t >= LevelValue[i][0] && t <= LevelValue[i][1]) {
-                    z = Zombie.getZombie(Level[i], GamePanel.this, l);
-                }
+            bgImage = ResourceLoader.loadImage("/images/mainBG.png");
+            if (bgImage == null) {
+                System.err.println("ERROR: bgImage is null!");
             }
-            laneZombies.get(l).add(z);
-        });
-        zombieProducer.start();
 
+            zom1_walk = ResourceLoader.loadImage("/images/zombies/walking_zom1.gif");
+            zom2_walk = ResourceLoader.loadImage("/images/zombies/walking_zom2.gif");
+            zom1_eat = ResourceLoader.loadImage("/images/zombies/eating_zom1.gif");
+            zom2_eat = ResourceLoader.loadImage("/images/zombies/eating_zom2.gif");
+
+            laneZombies = new ArrayList<>();
+            laneZombies.add(new ArrayList<>()); //line 1
+            laneZombies.add(new ArrayList<>()); //line 2
+            laneZombies.add(new ArrayList<>()); //line 3
+            laneZombies.add(new ArrayList<>()); //line 4
+            laneZombies.add(new ArrayList<>()); //line 5
+
+            lanePeas = new ArrayList<>();
+            lanePeas.add(new ArrayList<>()); //line 1
+            lanePeas.add(new ArrayList<>()); //line 2
+            lanePeas.add(new ArrayList<>()); //line 3
+            lanePeas.add(new ArrayList<>()); //line 4
+            lanePeas.add(new ArrayList<>()); //line 5
+
+            colliders = new Collider[45];
+            for (int i = 0; i < 45; i++) {
+                Collider a = new Collider();
+                a.setLocation(44 + (i % 9) * 100, 109 + (i / 9) * 120);
+                a.setAction(new PlantActionListener((i % 9), (i / 9)));
+                colliders[i] = a;
+                add(a, Integer.valueOf(0));
+            }
+
+            activeSuns = new ArrayList<>();
+
+            redrawTimer = new Timer(25, (ActionEvent e) -> {
+                repaint();
+            });
+            redrawTimer.start();
+
+            advancerTimer = new Timer(60, (ActionEvent e) -> advance());
+            advancerTimer.start();
+
+            sunProducer = new Timer(5000, (ActionEvent e) -> {
+                Random rnd = new Random();
+                Sun sta = new Sun(this, rnd.nextInt(800) + 100, 0, rnd.nextInt(300) + 200);
+                activeSuns.add(sta);
+                add(sta, Integer.valueOf(1));
+            });
+            sunProducer.start();
+
+            zombieProducer = new Timer(7000, (ActionEvent e) -> {
+                try {
+                    Random rnd = new Random();
+                    String[] Level = LevelData.LEVEL_CONTENT[Integer.parseInt(LevelData.LEVEL_NUMBER) - 1];
+                    int[][] LevelValue = LevelData.LEVEL_VALUE[Integer.parseInt(LevelData.LEVEL_NUMBER) - 1];
+                    int l = rnd.nextInt(5);
+                    int t = rnd.nextInt(100);
+                    Zombie z = null;
+                    for (int i = 0; i < LevelValue.length; i++) {
+                        if (t >= LevelValue[i][0] && t <= LevelValue[i][1]) {
+                            z = Zombie.getZombie(Level[i], GamePanel.this, l);
+                        }
+                    }
+                    if (z != null) {
+                        laneZombies.get(l).add(z);
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Error in zombie producer:");
+                    ex.printStackTrace();
+                }
+            });
+            zombieProducer.start();
+            
+            System.out.println("GamePanel initialized successfully");
+        } catch (Exception e) {
+            System.err.println("Error initializing GamePanel:");
+            e.printStackTrace();
+        }
     }
 
     private void advance() {

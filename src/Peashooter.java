@@ -9,7 +9,7 @@ public class Peashooter extends Plant {
     public Peashooter(GamePanel parent, int x, int y) {
         super(parent, x, y);
         setHealth(300);
-        this.setImg(new ImageIcon(this.getClass().getResource("images/plants/peashooter.gif")));
+        this.setImg(ResourceLoader.loadImage("/images/plants/peashooter.gif"));
         shootTimer = new Timer(2000, (ActionEvent e) -> { //TIME 
             //System.out.println("SHOOT");
             if (getGp().getLaneZombies().get(y).size() > 0) {

@@ -26,28 +26,28 @@ public class GameWindow extends JFrame {
         gp.setLocation(0, 0);
         getLayeredPane().add(gp, Integer.valueOf(0));
 
-        PlantCard sunflower = new PlantCard(new ImageIcon(this.getClass().getResource("images/cards/card_sunflower.png")).getImage());
+        PlantCard sunflower = new PlantCard(ResourceLoader.loadImage("/images/cards/card_sunflower.png"));
         sunflower.setLocation(110, 8);
         sunflower.setAction((ActionEvent e) -> {
             gp.setActivePlantingBrush(PlantType.Sunflower);
         });
         getLayeredPane().add(sunflower, Integer.valueOf(3));
 
-        PlantCard peashooter = new PlantCard(new ImageIcon(this.getClass().getResource("images/cards/card_peashooter.png")).getImage());
+        PlantCard peashooter = new PlantCard(ResourceLoader.loadImage("/images/cards/card_peashooter.png"));
         peashooter.setLocation(175, 8);
         peashooter.setAction((ActionEvent e) -> {
             gp.setActivePlantingBrush(PlantType.Peashooter);
         });
         getLayeredPane().add(peashooter, Integer.valueOf(3));
 
-        PlantCard freezepeashooter = new PlantCard(new ImageIcon(this.getClass().getResource("images/cards/card_freezepeashooter.png")).getImage());
+        PlantCard freezepeashooter = new PlantCard(ResourceLoader.loadImage("/images/cards/card_freezepeashooter.png"));
         freezepeashooter.setLocation(240, 8);
         freezepeashooter.setAction((ActionEvent e) -> {
             gp.setActivePlantingBrush(PlantType.FreezePeashooter);
         });
         getLayeredPane().add(freezepeashooter, Integer.valueOf(3));
 
-        PlantCard electroCard = new PlantCard(new ImageIcon(this.getClass().getResource("images/cards/card_electropeashooter.png")).getImage());
+        PlantCard electroCard = new PlantCard(ResourceLoader.loadImage("/images/cards/card_electropeashooter.png"));
         electroCard.setLocation(305, 8); 
         electroCard.setAction((ActionEvent e) -> {
             gp.setActivePlantingBrush(PlantType.ElectroPeashooter);

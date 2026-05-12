@@ -46,12 +46,12 @@ public class GamePanel extends JLayeredPane implements MouseMotionListener {
         this.sunScoreboard = sunScoreboard;
         setSunScore(150);  //pool avalie
 
-        bgImage = new ImageIcon(this.getClass().getResource("images/mainBG.png")).getImage();
+        bgImage = ResourceLoader.loadImage("/images/mainBG.png");
 
-        zom1_walk = new ImageIcon(this.getClass().getResource("images/zombies/walking_zom1.gif")).getImage();
-        zom2_walk = new ImageIcon(this.getClass().getResource("images/zombies/walking_zom2.gif")).getImage();
-        zom1_eat = new ImageIcon(this.getClass().getResource("images/zombies/eating_zom1.gif")).getImage();
-        zom2_eat = new ImageIcon(this.getClass().getResource("images/zombies/eating_zom1.gif")).getImage();
+        zom1_walk = ResourceLoader.loadImage("/images/zombies/walking_zom1.gif");
+        zom2_walk = ResourceLoader.loadImage("/images/zombies/walking_zom2.gif");
+        zom1_eat = ResourceLoader.loadImage("/images/zombies/eating_zom1.gif");
+        zom2_eat = ResourceLoader.loadImage("/images/zombies/eating_zom2.gif");
 
         laneZombies = new ArrayList<>();
         laneZombies.add(new ArrayList<>()); //line 1
@@ -163,7 +163,7 @@ public class GamePanel extends JLayeredPane implements MouseMotionListener {
                     if (z instanceof NormalZombie) {
                         g.drawImage(zom1_eat, z.getPosX(), 90 + (i * 120), null);
                     } else if (z instanceof ConeHeadZombie) {
-                        g.drawImage(zom2_eat, z.getPosX(), 100 + (i * 120), null);
+                        g.drawImage(zom2_eat, z.getPosX(), 90 + (i * 120), null);
                     }
                 }
                 else {

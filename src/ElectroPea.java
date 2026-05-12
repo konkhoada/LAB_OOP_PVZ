@@ -9,11 +9,11 @@ public class ElectroPea extends Pea {
         
         // Load electro pea image
         try {
-            this.setImg(new ImageIcon(this.getClass().getResource("images/electropea.png")).getImage());
+            this.setImg(ResourceLoader.loadImage("/images/electropea.png"));
         } catch (Exception e) {
             System.out.println("ERROR: Could not load electro pea image, using fallback");
             try {
-                this.setImg(new ImageIcon(this.getClass().getResource("images/pea.png")).getImage());
+                this.setImg(ResourceLoader.loadImage("/images/pea.png"));
             } catch (Exception e2) {
                 System.out.println("ERROR: Could not load fallback pea image either");
             }

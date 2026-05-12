@@ -9,7 +9,7 @@ public class FreezePea extends Pea {
         
         // Load freeze pea image
         try {
-            this.setImg(new ImageIcon(this.getClass().getResource("images/freezepea.png")).getImage());
+            this.setImg(ResourceLoader.loadImage("/images/freezepea.png"));
         } catch (Exception e) {
             System.out.println("ERROR: Could not load freeze pea image");
         }

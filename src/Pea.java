@@ -16,7 +16,7 @@ public class Pea {
         
         // Load pea image
         try {
-            this.img = new ImageIcon(this.getClass().getResource("images/pea.png")).getImage();
+            this.img = ResourceLoader.loadImage("/images/pea.png");
         } catch (Exception e) {
             System.out.println("ERROR: Could not load pea image: " + e.getMessage());
         }
